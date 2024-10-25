@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="src/output.css">
+    <style>
+        ::-webkit-scrollbar-track{
+            background: #000;
+        }
+
+        .active {
+            background-image: linear-gradient(40deg, #fb8200, #ff4949);
+            color: white;
+        }
+
+        .checked{
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body class="h-screen w-full bg-slate-800">
+    <div class=" h-screen p-5 grid grid-cols-12 gap-4">
+        <div class="col-span-2 rounded-3xl shadow-black/50  shadow-xl p-5 flex flex-col justify-between items-center"
+            style="background-image: linear-gradient(140deg, #000f33, #0020a1);">
+
+            <div class="flex flex-col items-center space-y-2 mt-10">
+                <img src="img/img.jpg"
+                    class="rounded-full h-[80px] w-[80px] object-center object-cover" alt="Profile Photo">
+                <p class="text-white font-bold">Swastik</p>
+            </div>
+
+            <div id="btn-container" class=" w-full flex flex-col items-center space-y-2 text-left">
+                <button class="active text-left p-2 w-full rounded-lg  text-white text-lg flex items-center gap-x-3"><img src="img/dashboard.png" alt="" class="h-[20px]"> Dashboard</button>
+                <button
+                class=" text-slate-200 text-left px-2 w-full rounded-lg py-2 hover:text-white text-lg flex items-center gap-x-3"><img src="img/attendance.png" alt="" class="h-[20px]"> Attendance</button>
+                <button
+                class=" text-slate-200 text-left px-2 w-full rounded-lg py-2 hover:text-white text-lg flex items-center gap-x-3"><img src="img/tasks.png" alt="" class="h-[20px]"> Tasks</button>
+                <button
+                    class=" text-slate-200 text-left px-2 w-full rounded-lg py-2 hover:text-white text-lg flex items-center gap-x-3"><img src="img/performance.png" alt="" class="h-[25px]"> Performance</button>
+                <button
+                    class=" text-slate-200 text-left px-2 w-full rounded-lg py-2 hover:text-white text-lg flex items-center gap-x-3"><img src="img/help.png" alt="" class="h-[20px]"> Help</button>
+            </div>
+
+            <div>
+                <button
+                    class="text-white text-md    px-5 py-2 border border-red-600 bg-red-500 rounded-lg">Logout</button>
+            </div>
+
+        </div>
+
+        <!------------------------------------ Dashboard Section -------------------------------------------------->
+        <div id="dashboard"
+            class=" col-span-7 rounded-3xl  p-5 space-y-6 shadow-black/50 shadow-xl overflow-y-hidden"
+            style="background-image: linear-gradient(40deg, #000f33, #0020a1); ">
+            <div class="w-full h-[150px] text-slate-900  shadow-black/40 shadow-lg rounded-2xl py-4 px-6 flex justify-between"
+                style="background-image: linear-gradient(40deg,  #ff4949, #fb8200)">
+                <div class="">
+                    <h1 class="text-2xl font-bold  tracking-wider mb-2">Hello Swastik!</h1>
+                    <p class=" text-md ">Roll no. : 2024UCS1695</p>
+                    <p class=" text-md ">Current sem. : 1st</p>
+                    <p class=" text-md ">Degree : B.Tech/CSE</p>
+
+                </div>
+                <div class="overflow-hidden ">
+                    <img src="img/img.jpg" class="rounded-lg h-[120px] w-[100px] object-center object-cover" alt="">
+                </div>
+
+            </div>
+            <div class="grid gap-4 grid-cols-2">
+                <div class="w-full h-[180px] bg-slate-700/40 shadow-2xl shadow-black/50 rounded-2xl">
+                    <canvas id="marksChart"></canvas>
+                </div>
+                <div
+                    class="w-full h-[180px] bg-slate-700/40 shadow-2xl shadow-black/50 flex justify-center rounded-2xl">
+                    <canvas id="attendanceChart">
+
+                    </canvas>
+                </div>
+            </div>
+            <div class="grid gap-4 grid-cols-2">
+                <div class=" bg-slate-700/40 rounded-2xl text-white p-5 flex flex-col items-center">
+                    <h1 class="font-bold text-xl mb-1 text-center">Assignments (due in 3 days )</h1>
+                    <canvas id="assignmentsChart" width="220"></canvas>
+                </div>
+                <div class=" bg-slate-700/40 rounded-2xl text-white p-5">
+                    <h1 class="font-bold text-xl mb-1">Exams</h1>
+                    <div class="grid grid-cols-2 ">
+                        <p><span class="font-semibold"> Maths:</span> 10</p>
+                        <p><span class="font-semibold"> ECE:</span> 4</p>
+                        <p><span class="font-semibold"> EE:</span> 3 days</p>
+                        <p><span class="font-semibold"> CP:</span> 3 days</p>
+                        <p><span class="font-semibold"> QP:</span> 3 days</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!--------------------------------------------------------------------------------------------------->
+
+
+        <!-- Performance Section -->
+        <div id="performance"
+            class="hidden col-span-7 rounded-3xl flex flex-col  p-5 space-y-6 shadow-black/50 shadow-xl "
+            style="background-image: linear-gradient(40deg, #000f33, #0020a1); ">
+            <h1 class="text-white text-3xl mt-8 mb-4 font-bold tracking-widest w-full text-center">Performance Chart (Random Data)</h1>
+            <canvas id="performanceChart" class="bg-orange-200 rounded-lg"></canvas>
+            
+        </div>
+        <!--------------------------------------------------------------------------------------------------->
+
+
+        <!-- Attendance Section -->
+        <div id="attendance" class="hidden col-span-7 rounded-3xl text-center  p-5 space-y-6 shadow-black/50 shadow-xl overflow-y-scroll "
+            style="background-image: linear-gradient(40deg, #000f33, #0020a1); ">
+            <h1 class="text-white text-3xl font-bold tracking-widest">Your Attendance</h1>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-slate-700/50 shadow-black/50 shadow-2xl rounded-xl p-5 flex flex-col items-center space-y-3">
+                    <h2 class="text-white text-lg font-semibold">Mathematics</h2>
+                    <canvas id="mathAttendance"></canvas>
+                    <h2 id="mathMsg" class="text-white"></h2>
+                </div>
+                <div class="bg-slate-700/50 shadow-black/50 shadow-2xl rounded-xl p-5 flex flex-col items-center space-y-3">
+                    <h2 class="text-white text-lg font-semibold">Basics of ECE</h2>
+                    <canvas id="eceAttendance"></canvas>
+                    <h2 id="eceMsg" class="text-white"></h2>
+                </div>
+                <div class="bg-slate-700/50 shadow-black/50 shadow-2xl rounded-xl p-5 flex flex-col items-center space-y-3">
+                    <h2 class="text-white text-lg font-semibold">Fundamentals of EE</h2>
+                    <canvas id="eeAttendance"></canvas>
+                    <h2 id="eeMsg" class="text-white"></h2>
+                </div>
+                <div class="bg-slate-700/50 shadow-black/50 shadow-2xl rounded-xl p-5 flex flex-col items-center space-y-3">
+                    <h2 class="text-white text-lg font-semibold">Quantum Physics</h2>
+                    <canvas id="qpAttendance"></canvas>
+                    <h2 id="qpMsg" class="text-white"></h2>
+                </div>
+                <div class="bg-slate-700/50 shadow-black/50 shadow-2xl rounded-xl p-5 flex flex-col items-center space-y-3">
+                    <h2 class="text-white text-lg font-semibold">Computer Programming</h2>
+                    <canvas id="cpAttendance"></canvas>
+                    <h2 id="cpMsg" class="text-white"></h2>
+                </div>
+                
+            </div>
+        </div>
+        <!--------------------------------------------------------------------------------------------------->
+
+        <!-- Tasks Section -->
+        <div id="tasks"
+            class="hidden col-span-7 rounded-3xl text-center  py-5 px-10 space-y-6 shadow-black/50 shadow-xl "
+            style="background-image: linear-gradient(40deg, #000f33, #0020a1); ">
+            <h1 class="text-white text-3xl font-bold tracking-widest">Tasks</h1>
+            <div class="w-full flex overflow-hidden rounded-lg">
+                <input id="todo" type="text" class="w-full px-3" placeholder="To-dos">  
+                <button class="text-white text-xl font-bold px-4 py-2 bg-orange-500 hover:bg-orange-400" id="add-task">Add</button>
+            </div>
+            <ul id="list-container" class="space-y-5">
+                <!-- <li class="text-white text-xl font-semibold uppercase text-left flex justify-between cursor-pointer">Hello <span class='cursor-pointer hover:bg-gray-600/50 rounded-full'>\u00d7</span></li> -->
+            </ul>
+            <div>
+                
+            </div>
+        </div>
+        <!--------------------------------------------------------------------------------------------------->
+
+        <!-- Help/Support Section -->
+        <div id="help"
+            class="hidden col-span-7 rounded-3xl text-center justify-center  py-5 px-10 space-y-6 shadow-black/50 shadow-xl overflow-y-scroll grid grid-cols-1 "
+            style="background-image: linear-gradient(40deg, #000f33, #0020a1); ">
+            <h1 class="text-white text-3xl font-bold tracking-widest">Help/Support</h1>
+            <div class="text-left p-6 bg-slate-700/40 shadow-xl shadow-black/40 rounded-lg  text-white space-y-10">
+                <p class="mb-6 text-lg">
+                    If you have any queries, whether academic or non-academic, feel free to reach out. We're here to help!
+                </p>
+                
+                <form action="/submit-query" method="POST" class="space-y-8">
+                    <!-- Name Field -->
+                    <div>
+                        <label for="name" class="block text-lg font-semibold ">Your Name:</label>
+                        <input type="text" id="name" name="name" required class="mt-1 p-2 w-full border -300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-slate-400/40">
+                    </div>
+            
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="block text-lg font-semibold ">Your Email:</label>
+                        <input type="email" id="email" name="email" required class="mt-1 p-2 w-full border  rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-slate-400/40">
+                    </div>
+            
+                    <!-- Message Field -->
+                    <div>
+                        <label for="message" class="block text-lg font-semibold ">Your Message:</label>
+                        <textarea id="message" name="message" rows="4" required class="mt-1 p-2 w-full border  rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-slate-400/40"></textarea>
+                    </div>
+            
+                    <!-- Submit Button -->
+                    <div>
+                        <button type="submit" class="w-full  text-white p-3 rounded-md shadow-md   focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-image: linear-gradient(40deg, #fb8200, #ff4949)">
+                            Submit Query
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        <!--------------------------------------------------------------------------------------------------->
+
+
+
+        <div class="col-span-3 rounded-3xl shadow-xl shadow-black/50 grid grid-rows-12 p-5 space-y-4 "
+            style="background-image: linear-gradient(140deg, #000f33, #0020a1)">
+            <div id="schedule" class="bg-slate-700/40 shadow-2xl shadow-black/50 row-span-9 rounded-2xl p-5 space-y-4 overflow-y-scroll">
+                <h1 class="text-white text-center font-bold text-2xl">Scheduled Tasks</h1>
+                <ul id="tasks-list" class="space-y-4"></ul>
+            </div>
+            <div
+                class="bg-slate-700/40 text-white tracking-widest flex flex-col items-center justify-center shadow-black/50 shadow-2xl row-span-3 rounded-2xl space-y-3">
+
+
+                <div id="clock" class="font-mono  font-bold text-5xl"></div>
+                <div id="date" class="text-xl font-semibold"></div>
+                <!-- Time will be displayed here -->
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="clock.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="charts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="performance.js"></script>
+    <script src="attendance.js"></script>
+    <script src="tasks.js"></script>
+
+</body>
+
+</html>
